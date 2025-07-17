@@ -4,29 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATM Simulator</title>
-    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="atm-container">
-        <h1>ATM Simulator</h1>
-        <div class="display">
-            <p id="message">Welcome! Please enter your PIN:</p>
-            <input type="password" id="pinInput" maxlength="4">
-            <button onclick="submitPin()">Submit</button>
+    <div class="atm-machine">
+        <div class="atm-header">
+            <div class="atm-logo">Shree's ATM</div>
+            <div class="bank-name">24/7 Banking Services</div>
         </div>
-        <div class="actions" id="actions" style="display: none;">
-            <button onclick="showAction('balance')">Check Balance</button>
-            <button onclick="showAction('withdraw')">Withdraw Money</button>
-            <button onclick="showAction('deposit')">Deposit Money</button>
-            <button onclick="logout()">Logout</button>
+        
+        <div class="card-slot"></div>
+        
+        <div class="screen">
+            <div id="loginScreen" class="fade-in">
+                <div class="display-message" id="welcomeMessage">
+                    Welcome to Shree's ATM<br>
+                    Please enter your 4-digit PIN
+                </div>
+                <div class="input-group">
+                    <input type="password" id="pinInput" maxlength="4" placeholder="••••" autofocus>
+                </div>
+                <button class="btn keypad-single" onclick="submitPin()">
+                    ENTER PIN
+                </button>
+                <div id="pinError" class="error-message hidden">
+                    Incorrect PIN. Please try again.
+                </div>
+            </div>
+
+            <div id="mainMenu" class="hidden">
+                <div class="display-message">
+                    Welcome, Account Holder<br>
+                    Please select a transaction
+                </div>
+                <div class="keypad">
+                    <button class="btn" onclick="showAction('balance')">
+                        Check Balance
+                    </button>
+                    <button class="btn" onclick="showAction('withdraw')">
+                        Withdraw Cash
+                    </button>
+                    <button class="btn" onclick="showAction('deposit')">
+                        Deposit Money
+                    </button>
+                    <button class="btn btn-danger" onclick="logout()">
+                        Exit
+                    </button>
+                </div>
+            </div>
+
+            <div id="transactionScreen" class="hidden">
+                <div class="display-message" id="transactionMessage"></div>
+                <div id="balanceView" class="hidden">
+                    <div class="balance-display">
+                        <div>Current Balance</div>
+                        <div class="balance-amount" id="balanceAmount">$0.00</div>
+                    </div>
+                </div>
+                <div id="transactionForm" class="transaction-form hidden">
+                    <input type="number" id="amountInput" placeholder="Enter amount ($)" min="1" step="0.01">
+                    <button class="btn btn-success" onclick="performTransaction()">
+                        CONFIRM
+                    </button>
+                </div>
+                <div id="transactionResult" class="hidden"></div>
+                <div class="keypad">
+                    <button class="btn btn-secondary" onclick="goBack()">
+                        Back to Menu
+                    </button>
+                    <button class="btn btn-danger" onclick="logout()">
+                        Exit
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="transaction" id="transaction" style="display: none;">
-            <p id="transactionMessage"></p>
-            <input type="number" id="amountInput" placeholder="Enter amount" min="0">
-            <button onclick="performTransaction()">Submit</button>
-            <button onclick="cancelTransaction()">Cancel</button>
-        </div>
+        
+        <div class="cash-slot"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
